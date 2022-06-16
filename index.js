@@ -1,6 +1,6 @@
 'use strict';
 
-const xd = 'dupa';
+const xd = 'test';
 
 /*
 1. shuffle deck of cards
