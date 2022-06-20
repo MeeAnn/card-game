@@ -18,7 +18,6 @@
     'clubs',
     'diamonds',
     'hearts',
-    'spades',
-  ],
-  dealType: 'half', // values: half, one-by-one
+    'spades'
+  ]
 }
