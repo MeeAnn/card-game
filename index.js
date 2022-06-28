@@ -1,9 +1,9 @@
 'use strict';
 
-const fs = require('fs');
+const shuffledDeck = require('./deck');
 
 /* - - - - -  T A S K S / R U L E S - - - - -
-1. Create a deck of cards and shuffle it ✓
+1. Create a deck of cards and shuffle it ✓ --> deck.js
 2. Deal the cards between 2 players (Half-Half or One-By-One) ✓
 3. Play the game: higher card value wins, lower loses, draw = no points for any player ✓
 4. Display the players score and result of each round ✓
@@ -11,20 +11,18 @@ const fs = require('fs');
 6. Test the whole thing using unit tests ✗
 */
 
+console.log(shuffledDeck);
+process.exit(0);
+
 // Players:
 const p1 = { startDeck: [], score: 0, poolDeck: [] };
 const p2 = { startDeck: [], score: 0, poolDeck: [] };
 
-// Reads the whole deck from the file
-const path = 'test/cardDeck.txt';
-const wholeDeck = fs.readFileSync(path, 'utf8')
-  .trim()
-  .split('\n')
-  .map(line => line.split(', '));
-
 // Shuffles any array (Fisher–Yates shuffle)
 function shuffle(array) {
-  let currentIndex = array.length; let oldPlacement; let newPlacement;
+  let currentIndex = array.length;
+  let oldPlacement;
+  let newPlacement;
 
   while (currentIndex) {
     newPlacement = Math.floor(Math.random() * currentIndex--);
@@ -36,25 +34,47 @@ function shuffle(array) {
   return array;
 }
 
+// Checks whether the deck is even
+function isNumberEven(number) {
+  if (number % 2 === 0) return true;
+}
+
 // Half-half deck deal
 function dealEvenly() {
-  p1.startDeck = deck.slice(0, 26);
-  p2.startDeck = deck.slice(26, 52);
+  if (isNumberEven(deck.length)) {
+    const half = deck.length / 2;
+    p1.startDeck = deck.slice(0, half);
+    p2.startDeck = deck.slice(half, deck.length);
+  } else {
+    deck.pop(); // If the deck is uneven, one card is discarded
+    dealEvenly();
+  }
 }
 
 // One-by-One deck deal (no. 1)
 function dealOneByOne() {
-  for (let i = 0; i < 52; i += 2) {
-    p1.startDeck.unshift(deck[i]);
-    p2.startDeck.unshift(deck[i + 1]);
+  if (isEven()) {
+    for (let i = 0; i < deck.length; i += 2) {
+      p1.startDeck.unshift(deck[i]);
+      p2.startDeck.unshift(deck[i + 1]);
+    }
+  } else {
+    deck.pop();
+    dealOneByOne();
   }
 }
 
 // One-by-One deck deal (no. 2)
 function dealOneByOneAlt() {
-  for (let i = 0; i < 26; i++) {
-    p1.startDeck.unshift(deck.shift());
-    p2.startDeck.unshift(deck.shift());
+  if (isEven()) {
+    const half = deck.length / 2;
+    for (let i = 0; i < half; i++) {
+      p1.startDeck.unshift(deck.shift());
+      p2.startDeck.unshift(deck.shift());
+    }
+  } else {
+    deck.pop();
+    dealOneByOneAlt();
   }
 }
 
@@ -66,7 +86,7 @@ function prepareCards(player) {
       player.startDeck.push(player.poolDeck.pop());
     }
   } else if (player.startDeck.length === 0 && player.poolDeck.length === 0) {
-    whoWon();
+    displayWinner();
     process.exit(0);
   }
 }
@@ -109,7 +129,7 @@ function judge(result) {
 }
 
 // Decides who won the whole game based on score
-function whoWon() {
+function displayWinner() {
   if (p1.score > p2.score) {
     console.log('Player 1 won!');
   } else if (p1.score < p2.score) {
@@ -122,8 +142,8 @@ function whoWon() {
 // - - - - - - G A M E  S T A R T - - - - - - - - //
 const deck = shuffle(wholeDeck);
 const pool = [];
-// dealEvenly();
-dealOneByOne();
+dealEvenly();
+// dealOneByOne();
 // dealOneByOneAlt();
 for (;;) fight();
 // - - - - - - G A M E  E N D S - - - - - - - - - //
