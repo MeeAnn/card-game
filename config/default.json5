@@ -18,6 +18,7 @@
     'clubs',
     'diamonds',
     'hearts',
-    'spades'
-  ]
+    'spades',
+  ],
+  dealType: 'one-by-one'
 }
