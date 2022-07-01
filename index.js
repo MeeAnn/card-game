@@ -26,14 +26,16 @@ const dealDeck = dealDeckFactory(dealType);
 makeDeckEven(shuffledDeck);
 const { player1Cards, player2Cards } = dealDeck(shuffledDeck);
 
+let scores = { player1Score: 0, player2Score: 0 };
+
 while (player1Cards.length) {
-  const scores = { player1Score: 0, player2Score: 0 };
   const fightingCards = showFightingCards({ player1Cards, player2Cards });
+  // console.log(fightingCards);
   const result = compareValues(fightingCards);
-  pointGiver(result, scores);
+  scores = pointGiver(result, scores);
   displayScores(scores);
   discardUsedCards({ player1Cards, player2Cards });
 }
-// displayWinner(scores);
+displayWinner(scores);
 
 process.exit(0);

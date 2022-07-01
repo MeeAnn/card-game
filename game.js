@@ -10,14 +10,13 @@ function compareValues({ player1Card, player2Card }) {
   return player1Card.value - player2Card.value;
 }
 
-// @todo => Give players their points!
 function pointGiver(result, { player1Score, player2Score }) {
   if (result > 0) {
-    console.log('Player 1 scores a point!');
+    console.log('Player1 scores a point!');
     player1Score++;
     return { player1Score, player2Score };
   } if (result < 0) {
-    console.log('Player 2 scores a point!');
+    console.log('Player2 scores a point!');
     player2Score++;
     return { player1Score, player2Score };
   } if (result === 0) {
