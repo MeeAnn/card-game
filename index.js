@@ -3,17 +3,16 @@
 const config = require('config');
 const { generateDeck, shuffleDeck } = require('./src/deck');
 const { dealDeckFactory, makeDeckEven } = require('./deal-types');
-const {
-  showFightingCards, compareValues, pointGiver, displayScores, discardUsedCards
-} = require('./game');
+const { readFightingCards, discardUsedCards } = require('./game');
+const { compareValues, pointGiver, displayScores } = require('./scores');
 const { displayWinner } = require('./display-winner');
 
 /* - - - - -  T A S K S / R U L E S - - - - -
 1. Create a deck of cards and shuffle it ✓ --> deck.js
 2. Deal the cards between 2 players (Half-Half or One-By-One) ✓ --> deal-types.js
-3. Play the game: higher card value wins, lower loses, draw = no points for any player ✓
-4. Display the players score and result of each round ✓ --> game.js
-5. When hand is empty display who won the game ✓
+3. Play the game: higher card value wins, lower loses, draw = no points for any player ✓ --> game.js, scores.js
+4. Display the players score and result of each round ✓ --> scores.js
+5. When hand is empty display who won the game ✓ --> display-winner.js
 6. Test the whole thing using unit tests ✗
 */
 
@@ -29,7 +28,7 @@ const { player1Cards, player2Cards } = dealDeck(shuffledDeck);
 let scores = { player1Score: 0, player2Score: 0 };
 
 while (player1Cards.length) {
-  const fightingCards = showFightingCards({ player1Cards, player2Cards });
+  const fightingCards = readFightingCards({ player1Cards, player2Cards });
   // console.log(fightingCards);
   const result = compareValues(fightingCards);
   scores = pointGiver(result, scores);
