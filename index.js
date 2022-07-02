@@ -2,10 +2,10 @@
 
 const config = require('config');
 const { generateDeck, shuffleDeck } = require('./src/deck');
-const { dealDeckFactory, makeDeckEven } = require('./deal-types');
-const { readFightingCards, discardUsedCards } = require('./game');
-const { compareValues, pointGiver, displayScores } = require('./scores');
-const { displayWinner } = require('./display-winner');
+const { dealDeckFactory, makeDeckEven } = require('./src/deal-types');
+const { readFightingCards, discardUsedCards } = require('./src/game');
+const { compareValues, pointGiver, displayScores } = require('./src/scores');
+const { displayWinner } = require('./src/display-winner');
 
 /* - - - - -  T A S K S / R U L E S - - - - -
 1. Create a deck of cards and shuffle it ✓ --> deck.js
