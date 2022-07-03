@@ -14,7 +14,7 @@ function makeDeckEven(deck) {
 
 function dealOneByOne(deck) {
   const cards = { player1Cards: [], player2Cards: [] };
-  for (let i = 0; i < deck.length / 2; i++) {
+  while (deck.length) {
     cards.player1Cards.push(deck.shift());
     cards.player2Cards.push(deck.shift());
   }
@@ -22,9 +22,10 @@ function dealOneByOne(deck) {
 }
 
 function dealByHalf(deck) {
+  const half = deck.length / 2;
   const cards = { player1Cards: [], player2Cards: [] };
-  cards.player1Cards.push(deck.slice(0, deck.length / 2));
-  cards.player2Cards.push(deck.slice(deck.length / 2, deck.length));
+  cards.player1Cards = (deck.slice(0, half));
+  cards.player2Cards = (deck.slice(half, deck.length));
   return cards;
 }
 
