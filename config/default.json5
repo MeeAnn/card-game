@@ -20,5 +20,5 @@
     'hearts',
     'spades',
   ],
-  dealType: 'half', // values: half, one-by-one
+  dealType: 'one-by-one' // values: 'half, 'one-by-one'
 }
