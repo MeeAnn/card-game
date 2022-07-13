@@ -26,9 +26,10 @@ function game() {
 
   const { player1Cards, player2Cards } = dealDeck(finalDeck);
   const scores = { player1: 0, player2: 0 };
-  let roundCount = 0;
+  let roundCount = 1;
 
-  while (roundCount < player1Cards.length) {
+  while (roundCount <= player1Cards.length) {
+    console.log(`Round ${roundCount}:`);
     const fightingCards = readFightingCards(roundCount, { player1Cards, player2Cards });
     const result = compareValues(fightingCards);
     if (result > 0) scores.player1 += 1;
