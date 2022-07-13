@@ -2,7 +2,7 @@
 
 const config = require('config');
 const { generateDeck, shuffleDeck } = require('./src/deck');
-const { dealDeckFactory, discardOddCards } = require('./src/deal-types');
+const { dealDeckFactory, DEAL_TYPES, discardOddCards } = require('./src/deal-types');
 const { readFightingCards } = require('./src/game');
 const { compareValues, displayRoundWinner, displayScores } = require('./src/scores');
 
@@ -30,15 +30,13 @@ function game() {
 
   while (roundCount < player1Cards.length) {
     const fightingCards = readFightingCards(roundCount, { player1Cards, player2Cards });
-    const deckLength = [player1Cards.length, player2Cards.length];
-    console.log(deckLength);
     const result = compareValues(fightingCards);
     if (result > 0) scores.player1 += 1;
     else if (result < 0) scores.player2 += 1;
     displayRoundWinner(result);
-    displayScores(scores);
     roundCount += 1;
   }
+  displayScores(scores);
 }
 
 game();
